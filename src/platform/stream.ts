@@ -483,6 +483,9 @@ class Subscription implements EventSubscription {
 
   async close(): Promise<void> {
     ++this.epoch;
+    const connection = this.connection;
+
+    this.connection = undefined;
     this.ended = true;
     this.error = undefined;
     this.queue = [];
@@ -494,11 +497,9 @@ class Subscription implements EventSubscription {
     this.status("closed");
 
     try {
-      await this.connection?.close();
+      await connection?.close();
     } catch (error) {
       throw normalizePluginApiError(error);
-    } finally {
-      this.connection = undefined;
     }
   }
 

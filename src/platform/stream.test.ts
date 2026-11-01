@@ -323,4 +323,54 @@ describe("platform resumable stream", () => {
     expect(subscription.acknowledgedCursor).toEqual(cursor(20, "new"));
     await subscription.close();
   });
+
+  it("keeps a resumed connection when the previous close finishes late", async () => {
+    let finishClose!: () => void;
+    const previousClose = new Promise<void>((resolve) => {
+      finishClose = resolve;
+    });
+    const receivers: Array<(frame: unknown) => void> = [];
+    const closed: number[] = [];
+    const acknowledged: number[] = [];
+    let opened = 0;
+    const transport: HostEventTransport = {
+      version: 1,
+      open: async (_request, receive) => {
+        const id = ++opened;
+        let closing = false;
+
+        receivers.push(receive);
+
+        return {
+          acknowledge: async () => {
+            acknowledged.push(id);
+          },
+          close: async () => {
+            if (closing) {
+              return;
+            }
+
+            closing = true;
+            closed.push(id);
+
+            if (id === 1) {
+              await previousClose;
+            }
+          },
+        };
+      },
+    };
+    const subscription = await openEventSubscription(transport, "events.subscribe", query);
+    const closing = subscription.close();
+
+    await subscription.resume();
+    finishClose();
+    await closing;
+    expect(subscription.state).toBe("open");
+    receivers[1]({ type: "event", event: event(1) });
+    await subscription.acknowledge((await subscription.next()).value);
+    expect(acknowledged).toEqual([2]);
+    await subscription.close();
+    expect(closed).toEqual([1, 2]);
+  });
 });

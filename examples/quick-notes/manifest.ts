@@ -2,7 +2,7 @@ import type { PluginManifest } from "../../src";
 
 export const manifest: PluginManifest = {
   id: "sobes.quick-notes",
-  version: "1.0.0",
+  version: "1.0.1",
   apiVersion: 1,
   name: { ru: "Быстрые заметки", en: "Quick notes" },
   description: {

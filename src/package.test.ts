@@ -7,6 +7,22 @@ import { manifest as calculatorManifest } from "../plugins/system-design-calcula
 import { manifest as crashManifest } from "../examples/crash-test/manifest";
 
 describe("Пакет примера", () => {
+  it("ships actual React, scheduler and KaTeX license texts in the generated UI package", async () => {
+    const installed = await Bun.file(
+      resolve(import.meta.dir, "../examples/bundles/meeting-library.json"),
+    ).json();
+    const javascript = installed.ui.javascript as string;
+
+    expect(javascript).toStartWith("/*!\nThird-party licenses and notices");
+    expect(javascript).toContain("=== react@19.1.0 ===");
+    expect(javascript).toContain("=== react-dom@19.1.0 ===");
+    expect(javascript).toContain("=== scheduler@");
+    expect(javascript).toContain("=== katex@0.16.23 ===");
+    expect(javascript).toContain("Copyright (c) Meta Platforms, Inc. and affiliates.");
+    expect(javascript).toContain("Copyright (c) 2013-2020 Khan Academy and other contributors");
+    expect(javascript).toContain("Permission is hereby granted, free of charge");
+  });
+
   it("собран из актуального SDK и совпадает с встроенным пакетом", async () => {
     const result = await Bun.build({
       entrypoints: [resolve(import.meta.dir, "../examples/meeting-markdown/index.ts")],

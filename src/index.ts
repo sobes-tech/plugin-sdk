@@ -133,6 +133,11 @@ export interface PluginPackage {
   ui?: PluginUiBundle;
 }
 
+export interface PluginOrigin {
+  catalog: string;
+  repository: string;
+}
+
 export interface PluginInstallation {
   manifest: PluginManifest;
   digest: string;
@@ -145,12 +150,15 @@ export interface PluginInstallation {
   installationId?: string;
   grantRevision?: number;
   resourceGrants?: readonly GrantDescriptor[];
+  origin?: PluginOrigin;
 }
 
 export interface PluginPreview {
   manifest: PluginManifest;
   digest: string;
   currentDigest: string | null;
+  origin?: PluginOrigin;
+  previewId?: string;
 }
 
 export interface PluginMessage {

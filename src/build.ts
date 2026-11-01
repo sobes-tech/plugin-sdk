@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import type { BunPlugin } from "bun";
 import type { PluginManifest, PluginPackage } from "./index";
+import { collectBuildNotices } from "./build-notices";
 
 const MAX_PACKAGE_BYTES = 32 * 1024 * 1024;
 const OVERLAY_CONTROL_SLOTS = new Set([
@@ -112,46 +113,67 @@ export async function buildPlugin(options: {
     }
   }
 
-  const bundle = async (entrypoint: string) =>
-    Bun.build({
+  const bundle = async (entrypoint: string) => {
+    const result = await Bun.build({
       entrypoints: [entrypoint],
       target: "browser",
       format: "iife",
       minify: true,
       sourcemap: "none",
       splitting: false,
+      metafile: true,
       plugins: [inlineMathFonts],
       define: { "process.env.NODE_ENV": '"production"' },
     });
+
+    if (!result.success) {
+      return { result, notices: "" };
+    }
+
+    if (!result.metafile) {
+      throw new Error("License notice collection requires Bun build metafile support");
+    }
+
+    const notices = await collectBuildNotices(result.metafile, entrypoint);
+
+    if (notices.missing.length) {
+      console.warn(
+        `[plugin-sdk] Review missing upstream license texts: ${notices.missing.join(", ")}`,
+      );
+    }
+
+    return { result, notices: notices.comment };
+  };
+
   const result = options.entrypoint ? await bundle(options.entrypoint) : null;
 
-  if (result && !result.success) {
-    throw new AggregateError(result.logs, "Plugin bundle failed");
+  if (result && !result.result.success) {
+    throw new AggregateError(result.result.logs, "Plugin bundle failed");
   }
 
-  if (result && result.outputs.length !== 1) {
+  if (result && result.result.outputs.length !== 1) {
     throw new Error("Worker must produce one self-contained JS bundle");
   }
 
-  const source = result ? await result.outputs[0].text() : "void 0";
+  const source = result ? result.notices + (await result.result.outputs[0].text()) : "void 0";
   const pkg: PluginPackage = { manifest: options.manifest, source };
 
   if (options.uiEntrypoint) {
     const ui = await bundle(options.uiEntrypoint);
 
-    if (!ui.success) {
-      throw new AggregateError(ui.logs, "React UI bundle failed");
+    if (!ui.result.success) {
+      throw new AggregateError(ui.result.logs, "React UI bundle failed");
     }
 
-    const js = ui.outputs.filter((output) => output.path.endsWith(".js"));
-    const css = ui.outputs.filter((output) => output.path.endsWith(".css"));
+    const js = ui.result.outputs.filter((output) => output.path.endsWith(".js"));
+    const css = ui.result.outputs.filter((output) => output.path.endsWith(".css"));
 
-    if (js.length !== 1 || js.length + css.length !== ui.outputs.length) {
+    if (js.length !== 1 || js.length + css.length !== ui.result.outputs.length) {
       throw new Error("UI must bundle all dependencies; inline images and fonts as data URLs");
     }
 
     pkg.ui = {
-      javascript: await js[0].text(),
+      javascript: ui.notices + (await js[0].text()),
       ...(css.length
         ? { css: (await Promise.all(css.map((file) => file.text()))).join("\n") }
         : {}),
