@@ -1,0 +1,73 @@
+{
+  "name": "@sobes-tech/plugin-sdk",
+  "version": "1.0.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./build": "./src/build.ts",
+    "./ui": "./src/ui.ts",
+    "./jsx-runtime": "./src/jsx-runtime.ts",
+    "./jsx-dev-runtime": "./src/jsx-runtime.ts",
+    "./react": "./src/react.tsx",
+    "./components": "./src/components.tsx",
+    "./markdown": "./src/markdown.tsx",
+    "./markdown-core": "./src/markdown-core.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "bun test --isolate src",
+    "build:examples": "bun scripts/build-examples.ts",
+    "build:plugins": "bun scripts/build-plugins.ts",
+    "test:plugins": "bun test --isolate plugins",
+    "generate:permissions": "bun scripts/generate-permissions.ts",
+    "check:permissions": "bun scripts/generate-permissions.ts --check",
+    "format": "prettier . --write && eslint . --fix && prettier . --write",
+    "format:check": "prettier . --check",
+    "lint": "eslint . --max-warnings 0",
+    "test:examples": "bun test --isolate examples"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@stylistic/eslint-plugin": "5.10.0",
+    "@types/bun": "^1.3.14",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "@typescript-eslint/parser": "8.72.1",
+    "eslint": "10.14.0",
+    "prettier": "3.9.10",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "typescript": "~5.8.3"
+  },
+  "description": "TypeScript SDK for React pages, UI slots and host APIs in Sobes desktop plugins",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sobes-tech/plugin-sdk.git"
+  },
+  "peerDependencies": {
+    "react": ">=18 <20",
+    "react-dom": ">=18 <20"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@radix-ui/react-select": "2.2.6",
+    "katex": "0.16.23",
+    "react-markdown": "10.1.0",
+    "rehype-highlight": "7.0.2",
+    "rehype-katex": "7.0.1",
+    "rehype-raw": "7.0.0",
+    "rehype-sanitize": "6.0.0",
+    "remark-gfm": "4.0.1",
+    "remark-math": "6.0.0"
+  },
+  "overrides": {
+    "mdast-util-gfm-autolink-literal": "2.0.0"
+  }
+}

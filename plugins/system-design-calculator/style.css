@@ -1,0 +1,185 @@
+.sd-calculator {
+  min-width: 0;
+  color: var(--foreground);
+  font-size: 12px;
+  line-height: 1.35;
+}
+.sd-tabs {
+  padding-bottom: 6px;
+}
+.sd-tabs .sobes-tab-list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  width: 100%;
+  max-width: none;
+  gap: 0;
+  overflow: visible;
+  padding: 0;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  background: transparent;
+}
+.sd-tabs .sobes-tab-list button {
+  min-width: 0;
+  min-height: 28px;
+  padding: 4px 5px;
+  border-radius: 0;
+  background: transparent;
+  color: var(--muted-foreground);
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  box-shadow: none;
+  transition: none;
+}
+.sd-tabs .sobes-tab-list button[aria-selected="true"] {
+  background: transparent;
+  color: var(--foreground);
+  font-weight: 600;
+  box-shadow: inset 0 -2px 0 var(--primary);
+}
+.sd-tabs .sobes-tab-list button:focus-visible {
+  outline: 2px solid var(--ring, var(--primary));
+  outline-offset: -4px;
+  border-radius: 4px;
+}
+.sd-results {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5px 10px;
+  margin: 0 0 6px;
+  padding: 0 0 6px;
+  border-bottom: 1px solid var(--border);
+}
+.sd-metric {
+  min-width: 0;
+}
+.sd-metric dt {
+  color: var(--muted-foreground);
+  font-size: 10px;
+  line-height: 1.25;
+}
+.sd-metric dd {
+  margin: 2px 0 0;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.15;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+.sd-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: end;
+  gap: 5px 8px;
+}
+.sd-fields .sobes-field {
+  min-width: 0;
+  gap: 3px;
+}
+.sd-fields .sobes-field > label {
+  font-size: 11px;
+  line-height: 1.25;
+}
+.sd-fields small {
+  display: inline;
+  margin-left: 4px;
+  color: var(--muted-foreground);
+  font-size: 10px;
+  font-weight: 400;
+}
+.sd-fields .sobes-input {
+  min-height: 28px;
+  height: 28px;
+  padding: 3px 7px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.sd-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px 8px;
+  margin-top: 6px;
+}
+.sd-footer > .sobes-button {
+  min-height: 26px;
+  height: 26px;
+  padding: 3px 7px;
+  border-radius: 6px;
+  font-size: 11px;
+}
+.sd-note,
+.sd-error {
+  margin: 4px 0;
+  font-size: 10px;
+  overflow-wrap: anywhere;
+}
+.sd-note {
+  color: var(--muted-foreground);
+}
+.sd-error {
+  color: var(--destructive, #d9534f);
+}
+.sd-assumptions {
+  color: var(--muted-foreground);
+  font-size: 10px;
+}
+.sd-assumptions[open] {
+  flex-basis: 100%;
+  order: 3;
+}
+.sd-assumptions summary {
+  cursor: pointer;
+  width: fit-content;
+  padding: 5px 0;
+}
+.sd-assumptions summary:focus-visible {
+  outline: 2px solid var(--ring, var(--primary));
+  outline-offset: 3px;
+}
+.sd-assumptions p {
+  margin: 7px 0 0;
+}
+.sd-assumptions ul {
+  margin: 8px 0;
+  padding-inline-start: 15px;
+}
+.sd-assumptions li {
+  margin: 4px 0;
+}
+.sd-assumptions code {
+  font: inherit;
+  overflow-wrap: anywhere;
+}
+@media (hover: hover) and (pointer: fine) {
+  .sd-tabs .sobes-tab-list button:not([aria-selected="true"]):hover {
+    background: transparent;
+    color: var(--foreground);
+    box-shadow: none;
+  }
+}
+@media (min-width: 360px) {
+  .sd-fields {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .sd-calculator[data-section="network"] .sd-results,
+  .sd-calculator[data-section="storage"] .sd-results {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (min-width: 520px) {
+  .sd-calculator[data-section="cache"] .sd-results {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+@media (max-width: 300px) {
+  .sd-tabs .sobes-tab-list button {
+    padding-inline: 3px;
+  }
+  .sd-metric dd {
+    font-size: 16px;
+  }
+}

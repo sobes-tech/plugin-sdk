@@ -1,0 +1,10 @@
+node_modules/
+dist/
+coverage/
+examples/bundles/
+plugins/bundles/
+# Generated declarations and the byte-checked host permission contract.
+src/permissions.generated.ts
+src/permissions.json
+bun.lock
+**/*.md

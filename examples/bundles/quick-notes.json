@@ -1,0 +1,31 @@
+{
+  "manifest": {
+    "id": "sobes.quick-notes",
+    "version": "1.0.0",
+    "apiVersion": 1,
+    "name": {
+      "ru": "Быстрые заметки",
+      "en": "Quick notes"
+    },
+    "description": {
+      "ru": "Создавайте заметки из собственной формы над библиотекой.",
+      "en": "Create notes from a custom form above the note library."
+    },
+    "permissions": [
+      "notes.write",
+      "ui.render"
+    ],
+    "commands": [],
+    "views": [
+      {
+        "id": "form",
+        "title": {
+          "ru": "Быстрая заметка",
+          "en": "Quick note"
+        },
+        "slot": "notes.header"
+      }
+    ]
+  },
+  "source": "(()=>{function S(k){let _=globalThis.__sobesRegister;if(!_)throw Error(\"Plugin bundles must run inside Sobes\");_(k)}function d(k){if(Array.isArray(k))return k.flatMap(d);if(k==null||typeof k===\"boolean\")return[];if(typeof k===\"string\"||typeof k===\"number\")return[{type:\"text\",text:String(k)}];return[k]}function C(k,_){let w=_??{};if(typeof k===\"function\")return k(w);let{children:s,...P}=w;for(let D of Object.values(P))if(typeof D===\"function\")throw Error(\"Use action names for plugin events\");return{type:\"element\",tag:k,props:P,children:d(s)}}var O=C;var c=(k)=>C(\"card\",k),x=(k)=>C(\"text\",k);var J=(k)=>C(\"button\",k),N=(k)=>C(\"input\",k),R=(k)=>C(\"textarea\",k);S({views:{async form(k){let _=k.input,w={name:\"\",content:\"\",...k.state};if(_?.action===\"name\")w.name=String(_.value??\"\");if(_?.action===\"content\")w.content=String(_.value??\"\");if(_?.action===\"save\"&&String(w.name).trim())await k.notes.create({name:String(w.name),content:String(w.content)}),w.name=\"\",w.content=\"\",w.saved=!0;let s=k.locale===\"ru\";return{title:s?\"Быстрая заметка\":\"Quick note\",state:w,blocks:[O(c,{title:s?\"Быстрая заметка\":\"Quick note\",children:[C(N,{label:s?\"Название\":\"Title\",value:w.name,action:\"name\"}),C(R,{label:s?\"Текст\":\"Content\",value:w.content,action:\"content\"}),C(J,{action:\"save\",disabled:!String(w.name).trim(),children:s?\"Сохранить\":\"Save\"}),w.saved&&C(x,{children:s?\"Заметка сохранена\":\"Note saved\"})]})]}}}});})();\n"
+}

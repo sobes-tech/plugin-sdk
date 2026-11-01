@@ -1,0 +1,178 @@
+.sobes-markdown {
+  min-width: 0;
+  max-width: 100%;
+  color: var(--foreground);
+  font-size: 13px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+.sobes-markdown > :first-child {
+  margin-top: 0;
+}
+.sobes-markdown > :last-child {
+  margin-bottom: 0;
+}
+.sobes-markdown :is(p, ul, ol, blockquote, pre, table) {
+  margin: 8px 0;
+}
+.sobes-markdown :is(h1, h2, h3, h4, h5, h6) {
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 14px 0 6px;
+}
+.sobes-markdown h1 {
+  font-size: 20px;
+}
+.sobes-markdown h2 {
+  font-size: 17px;
+}
+.sobes-markdown h3 {
+  font-size: 15px;
+}
+.sobes-markdown :is(h4, h5, h6) {
+  font-size: 13px;
+}
+.sobes-markdown :is(ul, ol) {
+  padding-inline-start: 22px;
+}
+.sobes-markdown li {
+  margin: 3px 0;
+}
+.sobes-markdown li > p {
+  margin: 3px 0;
+}
+.sobes-markdown .contains-task-list {
+  list-style: none;
+  padding-inline-start: 4px;
+}
+.sobes-markdown .task-list-item input {
+  margin-inline-end: 7px;
+  accent-color: var(--primary);
+}
+.sobes-markdown blockquote {
+  border-inline-start: 3px solid var(--border);
+  padding-inline-start: 12px;
+  color: var(--muted-foreground);
+}
+.sobes-markdown a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.sobes-markdown hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin-block: 16px;
+}
+.sobes-markdown code {
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 12px;
+}
+.sobes-markdown :not(pre) > code {
+  background: var(--muted);
+  border-radius: 4px;
+  padding: 2px 4px;
+}
+.sobes-markdown pre {
+  overflow: auto;
+  max-width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--muted);
+  padding: 12px;
+  white-space: pre;
+  overflow-wrap: normal;
+}
+.sobes-markdown pre code {
+  background: transparent;
+  padding: 0;
+}
+.sobes-markdown-table {
+  max-width: 100%;
+  overflow: auto;
+}
+.sobes-markdown table {
+  border-collapse: collapse;
+  min-width: 100%;
+}
+.sobes-markdown :is(th, td) {
+  border: 1px solid var(--border);
+  padding: 6px 10px;
+  text-align: start;
+}
+.sobes-markdown th {
+  font-weight: 600;
+  background: var(--muted);
+}
+.sobes-markdown img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+.sobes-markdown-image-alt {
+  color: var(--muted-foreground);
+}
+.sobes-markdown mark[data-hl] {
+  padding: 0;
+  border-radius: 2px;
+  text-decoration-line: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+.sobes-markdown mark[data-hl="m"] {
+  color: var(--chat-hl-m-fg, #fb923c);
+  background: var(--chat-hl-m-bg, transparent);
+  text-decoration-color: var(--chat-hl-m-line, transparent);
+}
+.sobes-markdown mark[data-hl="t"] {
+  color: var(--chat-hl-t-fg, #60a5fa);
+  background: var(--chat-hl-t-bg, transparent);
+  text-decoration-color: var(--chat-hl-t-line, transparent);
+}
+.sobes-markdown mark[data-hl="e"] {
+  color: var(--chat-hl-e-fg, #34d399);
+  background: var(--chat-hl-e-bg, transparent);
+  text-decoration-color: var(--chat-hl-e-line, transparent);
+}
+.sobes-markdown mark[data-hl="c"] {
+  color: var(--chat-hl-c-fg, #facc15);
+  background: var(--chat-hl-c-bg, transparent);
+  text-decoration-color: var(--chat-hl-c-line, transparent);
+}
+.sobes-markdown .katex-display {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-block: 4px;
+}
+.sobes-markdown .hljs-comment,
+.sobes-markdown .hljs-quote {
+  color: var(--muted-foreground);
+}
+.sobes-markdown .hljs-keyword,
+.sobes-markdown .hljs-selector-tag,
+.sobes-markdown .hljs-literal {
+  color: #c678dd;
+}
+.sobes-markdown .hljs-string,
+.sobes-markdown .hljs-regexp,
+.sobes-markdown .hljs-addition {
+  color: #70ae6e;
+}
+.sobes-markdown .hljs-number,
+.sobes-markdown .hljs-attr {
+  color: #d19a66;
+}
+.sobes-markdown .hljs-title,
+.sobes-markdown .hljs-built_in {
+  color: #61afef;
+}
+:root[data-theme="light"] .sobes-markdown .hljs-keyword {
+  color: #8b3399;
+}
+:root[data-theme="light"] .sobes-markdown .hljs-string {
+  color: #287526;
+}
+:root[data-theme="light"] .sobes-markdown .hljs-title {
+  color: #155d9b;
+}

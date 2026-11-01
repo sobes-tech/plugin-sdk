@@ -1,0 +1,4 @@
+interface:
+  display_name: "Sobes Plugin SDK"
+  short_description: "Build and review Sobes desktop plugins"
+  default_prompt: "Use $sobes-plugin-sdk to build a Sobes desktop plugin for the feature I describe, with the required permissions and a verified package."

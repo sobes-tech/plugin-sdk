@@ -1,0 +1,324 @@
+[
+  {
+    "id": "files.userSelected",
+    "title": {
+      "ru": "Чтение и запись выбранных JSON-файлов",
+      "en": "Read and write selected JSON files"
+    },
+    "scope": "userSelectedPath",
+    "risk": "write",
+    "methods": [
+      "files.openJson",
+      "files.saveJson"
+    ],
+    "implicit": false
+  },
+  {
+    "id": "meeting.read",
+    "title": {
+      "ru": "Выбранная встреча",
+      "en": "Selected meeting"
+    },
+    "scope": "selectedMeeting",
+    "risk": "read",
+    "methods": [],
+    "implicit": false
+  },
+  {
+    "id": "files.export",
+    "title": {
+      "ru": "Экспорт файлов",
+      "en": "Export files"
+    },
+    "scope": "userSelectedPath",
+    "risk": "write",
+    "methods": [],
+    "implicit": false
+  },
+  {
+    "id": "meetings.read",
+    "title": {
+      "ru": "Чтение встреч",
+      "en": "Read meetings"
+    },
+    "scope": "account",
+    "risk": "read",
+    "methods": [
+      "meetings.list",
+      "meetings.get",
+      "meetings.messages"
+    ],
+    "implicit": false
+  },
+  {
+    "id": "meetings.write",
+    "title": {
+      "ru": "Изменение встреч",
+      "en": "Edit meetings"
+    },
+    "scope": "account",
+    "risk": "write",
+    "methods": [
+      "meetings.create",
+      "meetings.rename"
+    ],
+    "implicit": false
+  },
+  {
+    "id": "screenshots.read",
+    "title": {
+      "ru": "Скриншоты встреч",
+      "en": "Meeting screenshots"
+    },
+    "scope": "account",
+    "risk": "read",
+    "methods": [
+      "screenshots.list",
+      "screenshots.get"
+    ],
+    "implicit": false
+  },
+  {
+    "id": "notes.read",
+    "title": {
+      "ru": "Чтение заметок",
+      "en": "Read notes"
+    },
+    "scope": "account",
+    "risk": "read",
+    "methods": [
+      "notes.list",
+      "notes.get",
+      "notes.folders"
+    ],
+    "implicit": false
+  },
+  {
+    "id": "notes.write",
+    "title": {
+      "ru": "Изменение заметок",
+      "en": "Edit notes"
+    },
+    "scope": "account",
+    "risk": "write",
+    "methods": [
+      "notes.create",
+      "notes.update"
+    ],
+    "implicit": false
+  },
+  {
+    "id": "tracker.read",
+    "title": {
+      "ru": "Чтение трекера",
+      "en": "Read tracker"
+    },
+    "scope": "account",
+    "risk": "read",
+    "methods": [
+      "tracker.columns",
+      "tracker.cards",
+      "tracker.get"
+    ],
+    "implicit": false
+  },
+  {
+    "id": "tracker.write",
+    "title": {
+      "ru": "Изменение трекера",
+      "en": "Edit tracker"
+    },
+    "scope": "account",
+    "risk": "write",
+    "methods": [
+      "tracker.create",
+      "tracker.update"
+    ],
+    "implicit": false
+  },
+  {
+    "id": "models.read",
+    "title": {
+      "ru": "Каталог моделей",
+      "en": "Model catalog"
+    },
+    "scope": "application",
+    "risk": "read",
+    "methods": [
+      "models.list"
+    ],
+    "implicit": false
+  },
+  {
+    "id": "clipboard.write",
+    "title": {
+      "ru": "Запись в буфер обмена",
+      "en": "Write clipboard"
+    },
+    "scope": "device",
+    "risk": "write",
+    "methods": [
+      "clipboard.write"
+    ],
+    "implicit": false
+  },
+  {
+    "id": "app.navigate",
+    "title": {
+      "ru": "Переходы между страницами",
+      "en": "Navigate app"
+    },
+    "scope": "application",
+    "risk": "write",
+    "methods": [
+      "app.navigate",
+      "app.openPage"
+    ],
+    "implicit": false
+  },
+  {
+    "id": "app.openExternal",
+    "title": {
+      "ru": "Открытие внешних ссылок",
+      "en": "Open external links"
+    },
+    "scope": "device",
+    "risk": "write",
+    "methods": [
+      "app.openExternal"
+    ],
+    "implicit": false
+  },
+  {
+    "id": "notifications.show",
+    "title": {
+      "ru": "Показ уведомлений",
+      "en": "Show notifications"
+    },
+    "scope": "application",
+    "risk": "write",
+    "methods": [
+      "notifications.show"
+    ],
+    "implicit": false
+  },
+  {
+    "id": "events.subscribe",
+    "title": {
+      "ru": "Подписка на события",
+      "en": "Subscribe to events"
+    },
+    "scope": "account",
+    "risk": "read",
+    "methods": [],
+    "implicit": false
+  },
+  {
+    "id": "network.request",
+    "title": {
+      "ru": "Сетевые запросы к указанным доменам",
+      "en": "Network requests to declared domains"
+    },
+    "scope": "declaredDomains",
+    "risk": "network",
+    "methods": [
+      "network.request",
+      "network.open",
+      "network.read",
+      "network.close"
+    ],
+    "implicit": false
+  },
+  {
+    "id": "ui.render",
+    "title": {
+      "ru": "Интерфейсы в слотах приложения",
+      "en": "Render in app slots"
+    },
+    "scope": "declaredSlots",
+    "risk": "render",
+    "methods": [],
+    "implicit": false
+  },
+  {
+    "id": "plugin.storage",
+    "title": {
+      "ru": "Собственные данные плагина",
+      "en": "Plugin-owned storage"
+    },
+    "scope": "plugin",
+    "risk": "write",
+    "methods": [
+      "storage.get",
+      "storage.set",
+      "storage.remove"
+    ],
+    "implicit": true
+  },
+  {
+    "id": "plugin.files",
+    "title": {
+      "ru": "Собственные JSON-файлы плагина",
+      "en": "Plugin-owned JSON files"
+    },
+    "scope": "plugin",
+    "risk": "write",
+    "methods": [
+      "files.readJson",
+      "files.writeJson",
+      "files.list"
+    ],
+    "implicit": true
+  },
+  {
+    "id": "api.inspect",
+    "title": {
+      "ru": "Описание доступного API",
+      "en": "Inspect available API"
+    },
+    "scope": "application",
+    "risk": "read",
+    "methods": [
+      "api.capabilities"
+    ],
+    "implicit": true
+  },
+  {
+    "id": "overlay.render",
+    "title": {
+      "ru": "Интерфейс оверлея",
+      "en": "Overlay interface"
+    },
+    "scope": "declaredSlots",
+    "risk": "write",
+    "methods": [],
+    "implicit": false
+  },
+  {
+    "id": "overlay.read",
+    "title": {
+      "ru": "Контекст активного оверлея",
+      "en": "Active overlay context"
+    },
+    "scope": "activeOverlay",
+    "risk": "read",
+    "methods": [
+      "overlay.context"
+    ],
+    "implicit": false
+  },
+  {
+    "id": "overlay.control",
+    "title": {
+      "ru": "Черновик в оверлее",
+      "en": "Overlay draft"
+    },
+    "scope": "activeOverlay",
+    "risk": "write",
+    "methods": [
+      "overlay.setDraft",
+      "overlay.insertText"
+    ],
+    "implicit": false
+  }
+]
