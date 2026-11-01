@@ -1,5 +1,5 @@
 /** @jsxImportSource react */
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { renderPlugin, usePlugin } from "../../src/react";
 import { Button, Field, Pill, Row, Stack, Text, Textarea } from "../../src/components";
 
@@ -9,6 +9,7 @@ function Notepad() {
   const [title, setTitle] = useState("");
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
+  const edited = useRef(false);
   const ru = locale === "ru";
   const storageKey =
     typeof context.messageId === "string" ? "message:" + context.messageId : "scratch";
@@ -16,6 +17,7 @@ function Notepad() {
   useEffect(() => {
     let active = true;
 
+    edited.current = false;
     setText("");
     overlay
       .context()
@@ -29,7 +31,7 @@ function Notepad() {
     storage
       .get<string>(storageKey)
       .then((value) => {
-        if (active) {
+        if (active && !edited.current) {
           setText(value ?? "");
         }
       })
@@ -61,9 +63,14 @@ function Notepad() {
       >
         <Textarea
           value={text}
-          onChange={(event) => setText(event.target.value)}
+          onChange={(event) => {
+            edited.current = true;
+            setText(event.target.value);
+          }}
           onBlur={() => {
-            void storage.set(storageKey, text).catch(() => {});
+            if (edited.current) {
+              void storage.set(storageKey, text).catch(() => {});
+            }
           }}
         />
       </Field>

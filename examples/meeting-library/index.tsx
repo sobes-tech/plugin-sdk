@@ -315,9 +315,16 @@ function Gallery() {
   const [selected, setSelected] = useState("");
   const [image, setImage] = useState<ScreenshotContent | null>(null);
   const [error, setError] = useState(false);
+  const [listAttempt, setListAttempt] = useState(0);
+  const [imageAttempt, setImageAttempt] = useState(0);
 
   useEffect(() => {
     let active = true;
+
+    setItems([]);
+    setSelected("");
+    setImage(null);
+    setError(false);
 
     if (!meetingId) {
       return;
@@ -340,7 +347,7 @@ function Gallery() {
     return () => {
       active = false;
     };
-  }, [screenshots, meetingId]);
+  }, [screenshots, meetingId, listAttempt]);
 
   useEffect(() => {
     let active = true;
@@ -350,10 +357,12 @@ function Gallery() {
     }
 
     setImage(null);
+    setError(false);
     screenshots
       .get(meetingId, selected)
       .then((value) => {
         if (active) {
+          setError(false);
           setImage(value);
         }
       })
@@ -366,7 +375,7 @@ function Gallery() {
     return () => {
       active = false;
     };
-  }, [screenshots, meetingId, selected]);
+  }, [screenshots, meetingId, selected, imageAttempt]);
 
   return (
     <Stack gap={12}>
@@ -383,7 +392,21 @@ function Gallery() {
         ))}
       </Row>
       {error ? (
-        <Text>{ru ? "Не удалось открыть скриншоты" : "Could not load screenshots"}</Text>
+        <Stack gap={8}>
+          <Text>{ru ? "Не удалось открыть скриншоты" : "Could not load screenshots"}</Text>
+          <Button
+            size="sm"
+            onClick={() => {
+              if (selected) {
+                setImageAttempt((value) => value + 1);
+              } else {
+                setListAttempt((value) => value + 1);
+              }
+            }}
+          >
+            {ru ? "Повторить" : "Retry"}
+          </Button>
+        </Stack>
       ) : image ? (
         <img
           src={image.dataUrl}

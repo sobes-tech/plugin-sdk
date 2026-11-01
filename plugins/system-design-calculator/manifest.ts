@@ -2,7 +2,7 @@ import type { PluginManifest } from "../../src";
 
 export const manifest = {
   id: "sobes.system-design-calculator",
-  version: "1.0.5",
+  version: "1.0.6",
   apiVersion: 1,
   name: { en: "System Design Calculator", ru: "Калькулятор system design" },
   description: {

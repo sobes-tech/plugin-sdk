@@ -31,6 +31,7 @@ function mockCompiler(source: string, javascript?: string, css?: string) {
   spyOn(Bun, "build").mockImplementation(async (options) => ({
     success: true,
     logs: [],
+    metafile: { inputs: {}, outputs: {} },
     outputs:
       options.entrypoints[0] === "worker.ts"
         ? [artifact("worker.js", source)]

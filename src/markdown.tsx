@@ -1,6 +1,6 @@
 /** @jsxImportSource react */
 import { memo, type CSSProperties } from "react";
-import Markdown, { type Components, type Options } from "react-markdown";
+import Markdown, { defaultUrlTransform, type Components, type Options } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
@@ -29,10 +29,18 @@ export interface MarkdownRendererProps {
 }
 const normalRemarks = [remarkGfm, remarkMath];
 const answerRemarks = [...normalRemarks, remarkAnswerHighlights];
+const isLocalImage = (url: string) =>
+  /^(?:data:image\/(?:png|jpeg|gif|webp|bmp);base64,|blob:)/i.test(url);
+const transformUrl: NonNullable<Options["urlTransform"]> = (url, key, node) =>
+  key === "src" && node.tagName === "img" && isLocalImage(url) ? url : defaultUrlTransform(url);
 const safeHtmlSchema = {
   ...defaultSchema,
   tagNames: [...(defaultSchema.tagNames ?? []), "u", "mark", "caption", "colgroup", "col"],
   attributes: { ...defaultSchema.attributes, col: ["span"], colgroup: ["span"], mark: ["dataHl"] },
+  protocols: {
+    ...defaultSchema.protocols,
+    src: [...(defaultSchema.protocols?.src ?? []), "data", "blob"],
+  },
   strip: [...(defaultSchema.strip ?? []), "style"],
 };
 const highlighting: NonNullable<Options["rehypePlugins"]> = [
@@ -79,7 +87,7 @@ export const MarkdownRenderer = memo(function MarkdownRenderer({
     ),
     // Remote images cannot bypass permissions. Authors can provide screenshot data URLs.
     img: ({ src, alt }) =>
-      src && /^(?:data:image\/(?:png|jpeg|gif|webp);base64,|blob:)/i.test(src) ? (
+      src && isLocalImage(src) ? (
         <img src={src} alt={alt ?? ""} />
       ) : (
         <span className="sobes-markdown-image-alt">{alt ?? ""}</span>
@@ -98,6 +106,7 @@ export const MarkdownRenderer = memo(function MarkdownRenderer({
         remarkPlugins={answerHighlights ? answerRemarks : normalRemarks}
         rehypePlugins={allowSafeHtml ? htmlRehype : normalRehype}
         components={components}
+        urlTransform={transformUrl}
       >
         {value}
       </Markdown>

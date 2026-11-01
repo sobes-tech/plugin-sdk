@@ -85,6 +85,10 @@ The result is a `PluginPackage`: `{ manifest, source, ui? }`. `source` contains 
 
 The builder emits a minified browser-targeted IIFE without source maps or split chunks. Dependencies are bundled. Runtime imports, Node-only libraries and external code loading are unsupported in the sandbox. Assets must use data URLs; the builder inlines KaTeX WOFF2 fonts.
 
+Using Bun's build metadata, the builder collects the package-root `LICENSE`, `LICENCE`, `COPYING`, `NOTICE`, `COPYRIGHT`, and `OFL` files (including suffixed filenames) of dependencies that contributed code or CSS. Their text and declared package metadata are preserved in a nonexecuting comment at the start of the worker or React JavaScript. Notice ordering is deterministic, and the notice bytes count toward the package limit. Build with Bun 1.3.14 or newer, with metafile support.
+
+If an installed dependency contains no notice file, the build warns and identifies it in the comment. Obtain its actual upstream notices before distribution. The builder does not download or invent license text, grant a license for the plugin or SDK, inspect separately copied assets, or establish that every license obligation is fulfilled. Authors must review missing notices, asset licenses, and any source-offer or redistribution requirements.
+
 The limit is **32 MiB for the complete UTF-8 JSON**, including manifest, code, CSS, embedded assets and formatting. The builder checks final size before writing. Package installation does not run Bun, a package manager or dependency lifecycle scripts.
 
 ### Import paths

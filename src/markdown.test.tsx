@@ -49,6 +49,44 @@ describe("Sobes Markdown", () => {
     expect(html).not.toContain("<img");
   });
 
+  it("renders permitted local images in Markdown and safe HTML", () => {
+    for (const src of [
+      "data:image/png;base64,aGVsbG8=",
+      "data:image/jpeg;base64,aGVsbG8=",
+      "data:image/gif;base64,aGVsbG8=",
+      "data:image/webp;base64,aGVsbG8=",
+      "data:image/bmp;base64,aGVsbG8=",
+      "blob:https://example.com/image",
+    ]) {
+      for (const content of [`![Screenshot](${src})`, `<img src="${src}" alt="Screenshot">`]) {
+        const html = renderToStaticMarkup(<MarkdownRenderer content={content} allowSafeHtml />);
+
+        expect(html).toContain(`<img src="${src}" alt="Screenshot"`);
+      }
+    }
+  });
+
+  it("retains safe links without allowing local image protocols in links or SVG images", () => {
+    const html = renderToStaticMarkup(
+      <MarkdownRenderer
+        content={[
+          "[Safe](https://example.com/page)",
+          "[Script](javascript:alert%281%29)",
+          "[Data](data:text/html;base64,aGVsbG8=)",
+          "[Blob](blob:https://example.com/page)",
+          "![SVG](data:image/svg+xml;base64,aGVsbG8=)",
+          "![Remote](https://example.com/image.png)",
+        ].join("\n\n")}
+      />,
+    );
+
+    expect(html).toContain('href="https://example.com/page"');
+    expect(html).not.toContain('href="javascript:');
+    expect(html).not.toContain('href="data:');
+    expect(html).not.toContain('href="blob:');
+    expect(html).not.toContain("<img");
+  });
+
   it("trims partial streaming markers, keeps normal brackets and handles empty input", () => {
     expect(renderToStaticMarkup(<MarkdownRenderer isStreaming content="Text [[t" />)).not.toContain(
       "[[t",
