@@ -9,7 +9,7 @@ Build `examples/bundles/crash-test.json` and install it through **Plugins → In
 - **Throw a synchronous error** throws from a React click handler.
 - **Create an unhandled rejection** rejects a Promise without a catch handler, so the host can exercise its unhandled-rejection reporting.
 
-Open this plugin's installed settings for the worker tests:
+For the worker tests, open **Plugins → Installed**, then open the **Plugins** menu below the installed list:
 
 - **Test worker exception** throws from the selected worker command.
 - **Test worker timeout** runs an allocation-free infinite loop in that command's isolated worker process. It makes no host calls. The normal uninterrupted QuickJS limit, currently two seconds, should interrupt it; the overall worker deadline remains unchanged. Do not run this command in an unrestricted JavaScript runtime.
@@ -27,7 +27,7 @@ No test allocates unbounded memory, starts a browser main-thread loop or attempt
 - **Вызвать синхронную ошибку** выбрасывает исключение из обработчика нажатия React.
 - **Отклонить Promise без обработчика** создаёт отклонённый Promise без `catch`, чтобы проверить регистрацию необработанных отклонений хостом.
 
-Для проверок worker откройте настройки установленного плагина:
+Для проверок worker откройте **Плагины → Установленные**, затем меню **Плагины** под списком установленных:
 
 - **Проверить ошибку worker** выбрасывает исключение из выбранной команды worker.
 - **Проверить таймаут worker** запускает бесконечный цикл без выделения памяти в отдельном процессе выбранной команды. Цикл не вызывает API хоста. Его должен прервать обычный лимит непрерывного выполнения QuickJS, сейчас две секунды; общий дедлайн worker не меняется. Не запускайте эту команду в JavaScript-среде без лимита выполнения.

@@ -66,8 +66,8 @@ function CrashTest() {
             <Stack gap={8}>
               <Text>
                 {ru
-                  ? "В настройках установленного плагина запустите «Проверить ошибку worker» для исключения или «Проверить таймаут worker» для бесконечного цикла в отдельном процессе."
-                  : "In this installed plugin's settings, run Test worker exception to throw an error, or Test worker timeout to enter an infinite loop in a separate process."}
+                  ? "Откройте «Плагины» → «Установленные», затем меню «Плагины» под списком. Выберите «Проверить ошибку worker» для исключения или «Проверить таймаут worker» для бесконечного цикла в отдельном процессе."
+                  : "Open Plugins → Installed, then the Plugins menu below the list. Choose Test worker exception to throw an error, or Test worker timeout to enter an infinite loop in a separate process."}
               </Text>
               <Text muted>
                 {ru
